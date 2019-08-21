@@ -1,19 +1,18 @@
-import React, {Fragment} from 'react';
-import Image from "react-bootstrap/Image";
+import React, {Fragment,Component} from 'react';
 
-const Product = ({product,apiUrl}) => {
-    return (
-        <Fragment>
-            <h1 className="text-capitalize border-bottom">{product.title}</h1>
-            <div className="my-4">
-                <Image src={`${apiUrl}static/${product.img}`} rounded />
-            </div>
-            <div className="border-top">
-                <h3 className="h4">Product Description</h3>
-                <p>{product.text}</p>
-            </div>
-        </Fragment>
-    )
-}
+import Col from "react-bootstrap/Col";
+
+import ProductDetails from "../moleculas/ProductDetails";
+import ReviewsList from "./ReviewsList";
+
+const Product = ({ product,apiUrl,reviews }) => (
+    <Fragment>
+        <ProductDetails product={product} apiUrl={apiUrl} />
+        <Col xs={6}>
+            <div className="form_review"></div>
+            <ReviewsList reviews={reviews}/>
+        </Col>
+    </Fragment>
+)
 
 export default Product;

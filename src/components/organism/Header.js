@@ -3,7 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
 const Header = ({products, selectedProduct,menuClickHandler}) => {
-    console.log(menuClickHandler)
+    // console.log(menuClickHandler)
     return (
         <Navbar bg="dark" expand="lg" variant="dark">
             <Navbar.Brand href="#home">E-Store</Navbar.Brand>
@@ -15,7 +15,7 @@ const Header = ({products, selectedProduct,menuClickHandler}) => {
                             return (
                                 <Nav.Link
                                     href="#"
-                                    onClick={console.log(menuClickHandler)}
+                                    onClick={() => menuClickHandler(el.id)}
                                     key={el.id}
                                     active={(selectedProduct && el.id == selectedProduct.id)}
                                 >

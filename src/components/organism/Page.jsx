@@ -15,6 +15,7 @@ class Page extends Component {
         super(props);
         this.state = {
             products: [],
+            reviews: [],
             user: {
                 name: 'Oleh'
             },
@@ -46,23 +47,30 @@ class Page extends Component {
             ...this.state,
             selectedProduct: selectedProduct
         });
+
+        axios
+            .get(this.state.apiUrl + 'api/reviews/' + id, {})
+            .then(res => {
+                console.log('res', res.data)
+                this.setState({
+                    ...this.state,
+                    reviews: res.data
+                });
+            })
     }
 
     render() {
 
-        const {products, selectedProduct, apiUrl} = this.state;
+        const {products, selectedProduct, apiUrl, reviews} = this.state;
 
         return (
             <Fragment>
                 <Header products={products} selectedProduct={selectedProduct} menuClickHandler={(id) => this.menuClickHandler(id)}/>
                 <Container>
                     <Row className="my-3">
-                        <Col xs={6}>
-                            {
-                                selectedProduct ? <Product product={selectedProduct} apiUrl={apiUrl}/> : ''
-                            }
-                        </Col>
-                        <Col xs={6}>1 of 2</Col>
+                        {
+                            selectedProduct ? <Product product={selectedProduct} apiUrl={apiUrl} reviews={reviews}/> : 'No product selected'
+                        }
                     </Row>
                 </Container>
 
