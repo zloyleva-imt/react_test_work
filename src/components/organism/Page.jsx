@@ -3,9 +3,12 @@ import React, {Component, Fragment} from 'react';
 import _ from 'lodash';
 import axios from 'axios';
 
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
+import Header from "./Header";
 import Product from './Product';
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
 
 class Page extends Component {
     constructor(props) {
@@ -51,33 +54,18 @@ class Page extends Component {
 
         return (
             <Fragment>
-                <Navbar bg="dark" expand="lg" variant="dark">
-                    <Navbar.Brand href="#home">E-Store</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto">
+                <Header products={products} selectedProduct={selectedProduct} menuClickHandler={(id) => this.menuClickHandler(id)}/>
+                <Container>
+                    <Row className="my-3">
+                        <Col xs={6}>
                             {
-                                products.map(el => {
-                                    return (
-                                        <Nav.Link
-                                            href="#"
-                                            onClick={() => {
-                                                this.menuClickHandler(el.id)
-                                            }}
-                                            key={el.id}
-                                            active={(selectedProduct && el.id == selectedProduct.id)}
-                                        >
-                                            {el.title}
-                                        </Nav.Link>
-                                    )
-                                })
+                                selectedProduct ? <Product product={selectedProduct} apiUrl={apiUrl}/> : ''
                             }
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-                {
-                    selectedProduct ? <Product product={selectedProduct} apiUrl={apiUrl}/> : ''
-                }
+                        </Col>
+                        <Col xs={6}>1 of 2</Col>
+                    </Row>
+                </Container>
+
 
             </Fragment>
         )

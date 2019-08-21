@@ -1,17 +1,18 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import Image from "react-bootstrap/Image";
 
 const Product = ({product,apiUrl}) => {
     return (
-        <div>
-            <h1>{product.title}</h1>
-            <div>
-                <img src={`${apiUrl}static/${product.img}`} alt=""/>
+        <Fragment>
+            <h1 className="text-capitalize border-bottom">{product.title}</h1>
+            <div className="my-4">
+                <Image src={`${apiUrl}static/${product.img}`} rounded />
             </div>
-            <div>
-                <h3>Product Description</h3>
+            <div className="border-top">
+                <h3 className="h4">Product Description</h3>
                 <p>{product.text}</p>
             </div>
-        </div>
+        </Fragment>
     )
 }
 
