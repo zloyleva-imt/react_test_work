@@ -14,12 +14,20 @@ class ReviewsModule extends Component{
 
     state = {
         indexHoverStar:-1,
+        indexSelectedStar:-1,
     }
 
     setIndexHoverStar = (index) => {
-        console.log("onMouseOver",index)
+        console.log("setIndexHoverStar",index)
         this.setState({
             indexHoverStar:index
+        })
+    }
+
+    setIndexSelectedStar = (index) => {
+        console.log("setIndexSelectedStar",index)
+        this.setState({
+            indexSelectedStar:index
         })
     }
 
@@ -31,7 +39,7 @@ class ReviewsModule extends Component{
 
     render() {
         const {reviews} = this.props;
-        const {indexHoverStar} = this.state;
+        const {indexHoverStar,indexSelectedStar} = this.state;
         return (
             <Col xs={6}>
                 <h2>Add new review</h2>
@@ -40,11 +48,17 @@ class ReviewsModule extends Component{
                     <Form.Group controlId="exampleForm.ControlInput1" onMouseLeave={this.clearHoveredStars}>
                         {
                             [...Array(5)].map((el,i) => {
+                                console.log('indexHoverStar',{indexHoverStar,i,indexSelectedStar})
                                 return (
                                     <FontAwesomeIcon
-                                        icon={indexHoverStar>=i?faStar:faRegStar}
-                                        onClick={()=>{}}
-                                        onMouseOver={()=>{this.setIndexHoverStar(i)}}
+                                        icon={
+                                            indexHoverStar>=i || indexSelectedStar>=i
+                                                ?
+                                                faStar
+                                                :faRegStar
+                                        }
+                                        onClick={()=>this.setIndexSelectedStar(i)}
+                                        onMouseOver={()=>this.setIndexHoverStar(i)}
                                     />
                                 )
                             })
