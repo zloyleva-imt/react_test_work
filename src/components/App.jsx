@@ -9,6 +9,22 @@ class App extends Component {
     token: null
   }
 
+  setUsersToken = (token) => {
+    this.setState({
+      token
+    });
+    localStorage.setItem('token',token)
+  }
+
+  componentDidMount() {
+    const token = localStorage.getItem('token');
+    if(token){
+      this.setState({
+        token
+      });
+    }
+  }
+
   render(){
     const { token } = this.state;
     if(token){
@@ -17,7 +33,7 @@ class App extends Component {
       );
     }
     return (
-      <Registration />
+        <Registration setUsersToken={token => this.setUsersToken(token)}/>
     )
   }
 }

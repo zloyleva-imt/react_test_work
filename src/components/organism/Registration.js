@@ -16,6 +16,7 @@ class Registration extends Component{
     }
 
     submitRegistration = (e) => {
+        const { setUsersToken } = this.props;
         e.preventDefault()
         const { username, password, loginUrl } = this.state;
 
@@ -29,7 +30,9 @@ class Registration extends Component{
                 )
             .then(res => {
                 console.log('submitRegistration',res.data)
-
+                if(res.data.success == true){
+                    setUsersToken(res.data.token)
+                }
 
             })
 
