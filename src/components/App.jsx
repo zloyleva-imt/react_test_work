@@ -17,7 +17,7 @@ class App extends Component {
       );
     }
     return (
-      <Registration/>
+      <Registration />
     )
   }
 }
