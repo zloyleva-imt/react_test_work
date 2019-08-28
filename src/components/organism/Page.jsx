@@ -16,12 +16,8 @@ class Page extends Component {
         this.state = {
             products: [],
             reviews: [],
-            user: {
-                name: 'Oleh'
-            },
             apiUrl: 'http://smktesting.herokuapp.com/',
             selectedProduct: null,
-            token: null
         }
     }
 
