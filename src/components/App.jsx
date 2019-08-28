@@ -29,7 +29,7 @@ class App extends Component {
     const { token } = this.state;
     if(token){
       return (
-          <Page />
+          <Page token={token} />
       );
     }
     return (

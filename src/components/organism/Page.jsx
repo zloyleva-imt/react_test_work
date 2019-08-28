@@ -53,8 +53,8 @@ class Page extends Component {
     }
 
     render() {
-
-        const {products, selectedProduct, apiUrl, reviews} = this.state;
+        const { token } = this.props;
+        const { products, selectedProduct, apiUrl, reviews } = this.state;
 
         return (
             <Fragment>
@@ -62,7 +62,7 @@ class Page extends Component {
                 <Container>
                     <Row className="my-3">
                         {
-                            selectedProduct ? <Product product={selectedProduct} apiUrl={apiUrl} reviews={reviews}/> : 'No product selected'
+                            selectedProduct ? <Product product={selectedProduct} apiUrl={apiUrl} reviews={reviews} token={token} /> : 'No product selected'
                         }
                     </Row>
                 </Container>

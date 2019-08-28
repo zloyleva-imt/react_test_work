@@ -10,6 +10,8 @@ import {faStar} from "@fortawesome/free-solid-svg-icons";
 import {faStar as faRegStar} from "@fortawesome/free-regular-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
+import axios from 'axios';
+
 class ReviewsModule extends Component{
 
     state = {
@@ -37,6 +39,27 @@ class ReviewsModule extends Component{
         })
     }
 
+    submitReviews = (e) => {
+        const { token } = this.props;
+        const { indexSelectedStar: rate } = this.state
+        e.preventDefault();
+
+        axios
+            .post(
+                'http://smktesting.herokuapp.com/api/reviews/1',
+                {
+                    rate: rate,
+                    text: e.target.text.value,
+                },
+                {
+                    headers:{
+                        'Authorization': `Token ${token}`
+                    }
+                }
+            )
+            .then(res => console.log(res.data))
+    }
+
     render() {
         const {reviews} = this.props;
         const {indexHoverStar,indexSelectedStar} = this.state;
@@ -44,7 +67,7 @@ class ReviewsModule extends Component{
             <Col xs={6}>
                 <h2>Add new review</h2>
 
-                <Form>
+                <Form onSubmit={this.submitReviews}>
                     <Form.Group controlId="exampleForm.ControlInput1" onMouseLeave={this.clearHoveredStars}>
                         {
                             [...Array(5)].map((el,i) => {
@@ -65,7 +88,7 @@ class ReviewsModule extends Component{
                         }
                     </Form.Group>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
-                        <Form.Control as="textarea" rows="3" placeholder="Type your reviews..." />
+                        <Form.Control as="textarea" name="text" rows="3" placeholder="Type your reviews..." />
                     </Form.Group>
                     <Button variant="primary" type="submit">
                         Submit
