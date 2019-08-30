@@ -8,19 +8,19 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import axios from 'axios';
+import {connect} from "react-redux";
 
 class Registration extends Component{
 
     state = {
         username: '',
         password: '',
-        loginUrl: 'http://smktesting.herokuapp.com/api/register/'
     }
 
     submitRegistration = (e) => {
-        const { setUsersToken } = this.props;
+        const { setUsersToken,loginUrl,setToken } = this.props;
         e.preventDefault()
-        const { username, password, loginUrl } = this.state;
+        const { username, password } = this.state;
 
         axios
             .post(
@@ -32,8 +32,9 @@ class Registration extends Component{
                 )
             .then(res => {
                 console.log('submitRegistration',res.data)
-                if(res.data.success == true){
+                if(res.data.success === true){
                     setUsersToken(res.data.token)
+                    setToken(res.data.token)
                 }
 
             })
@@ -48,6 +49,9 @@ class Registration extends Component{
     }
 
     render(){
+
+        console.log(this.props)
+
         return (
             <Container>
                 <Row className="justify-content-md-center my-4">
@@ -79,4 +83,17 @@ Registration.propTypes = {
     setUsersToken: PropTypes.func
 }
 
-export { Registration }
+const  mapStateToProps = state => ({
+    loginUrl: state.links.loginUrl
+})
+
+const mapDispatchToProps = dispatch => ({
+    setToken: token => dispatch({type:"SET_TOKEN", payload: token})
+})
+
+const x = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Registration)
+
+export { x as Registration }
