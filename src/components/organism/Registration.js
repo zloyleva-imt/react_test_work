@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
@@ -71,6 +73,10 @@ class Registration extends Component{
             </Container>
         )
     }
+}
+
+Registration.propTypes = {
+    setUsersToken: PropTypes.func
 }
 
 export { Registration }

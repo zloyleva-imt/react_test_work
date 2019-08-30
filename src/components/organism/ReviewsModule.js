@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Col from "react-bootstrap/Col";
+import _ from 'lodash'
 
 import ReviewsList from "./ReviewsList";
 
@@ -17,6 +18,7 @@ class ReviewsModule extends Component{
     state = {
         indexHoverStar:-1,
         indexSelectedStar:-1,
+        reviews: []
     }
 
     setIndexHoverStar = (index) => {
@@ -40,15 +42,15 @@ class ReviewsModule extends Component{
     }
 
     submitReviews = (e) => {
-        const { token } = this.props;
+        const { token,productId,apiUrl } = this.props;
         const { indexSelectedStar: rate } = this.state
         e.preventDefault();
 
         axios
             .post(
-                'http://smktesting.herokuapp.com/api/reviews/1',
+                `${apiUrl}api/reviews/${productId}`,
                 {
-                    rate: rate,
+                    rate: rate + 1,
                     text: e.target.text.value,
                 },
                 {
@@ -57,12 +59,34 @@ class ReviewsModule extends Component{
                     }
                 }
             )
-            .then(res => console.log(res.data))
+            .then(res => {
+                console.log(res.data)
+
+                axios
+                    .get(apiUrl + 'api/reviews/' + productId, {})
+                    .then(res => {
+                        console.log('res', res.data)
+                        this.setState({
+                            ...this.state,
+                            reviews: res.data
+                        });
+                    })
+
+            })
+            .catch(err => console.log('Error', err))
+
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot){
+        const {reviews} = this.props;
+        if(!_.isEqual(_.sortBy(reviews), _.sortBy(prevProps.reviews)))
+        this.setState({
+            reviews:reviews
+        })
     }
 
     render() {
-        const {reviews} = this.props;
-        const {indexHoverStar,indexSelectedStar} = this.state;
+        const {indexHoverStar,indexSelectedStar,reviews} = this.state;
         return (
             <Col xs={6}>
                 <h2>Add new review</h2>

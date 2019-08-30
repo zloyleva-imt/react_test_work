@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from 'react';
+import PropTypes from 'prop-types'
 
 import _ from 'lodash';
 import axios from 'axios';
@@ -71,6 +72,10 @@ class Page extends Component {
             </Fragment>
         )
     }
+}
+
+Page.propTypes = {
+    token: PropTypes.string.isRequired
 }
 
 export default Page;
