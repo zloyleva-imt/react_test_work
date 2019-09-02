@@ -1,30 +1,33 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types'
 
 import Page from './organism/Page'
 import {Registration} from "./organism/Registration";
 import {connect} from "react-redux";
 import {setToken} from "../actions/registration";
 
-class App extends Component {
+const App = ({ token, setToken }) => {
 
-  componentDidMount() {
+  useEffect(() => {
     const token = localStorage.getItem('token');
     if(token){
-      this.props.setToken(token)
+      setToken(token)
     }
-  }
+  })
 
-  render(){
-    const { token } = this.props;
-    if(token){
-      return (
-          <Page token={token} />
-      );
-    }
+  if(token){
     return (
-        <Registration />
-    )
+        <Page token={token} />
+    );
   }
+  return (
+      <Registration />
+  )
+}
+
+App.propTypes = {
+  token: PropTypes.string,
+  setToken: PropTypes.func.isRequired
 }
 
 export default connect(
