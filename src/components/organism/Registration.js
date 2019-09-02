@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 
 import axios from 'axios';
 import {connect} from "react-redux";
+import { setToken } from "../../actions/registration"
 
 class Registration extends Component{
 
@@ -88,12 +89,12 @@ const  mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    setToken: token => dispatch({type:"SET_TOKEN", payload: token})
+    setToken: token => dispatch(setToken(token))
 })
 
-const x = connect(
+const registrationWithRedux = connect(
     mapStateToProps,
     mapDispatchToProps
 )(Registration)
 
-export { x as Registration }
+export { registrationWithRedux as Registration }
