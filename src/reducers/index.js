@@ -3,9 +3,6 @@ import { SET_TOKEN } from '../actions/registration'
 const initState = {
     products: [],
     reviews: [],
-    links: {
-        loginUrl: 'http://smktesting.herokuapp.com/api/register/'
-    },
     token: null
 }
 

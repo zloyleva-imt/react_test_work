@@ -7,9 +7,8 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import axios from 'axios';
 import {connect} from "react-redux";
-import { setToken } from "../../actions/registration"
+import { fetchRegistrationUser } from "../../actions/registration"
 
 class Registration extends Component{
 
@@ -19,28 +18,12 @@ class Registration extends Component{
     }
 
     submitRegistration = (e) => {
-        const { setUsersToken,loginUrl,setToken } = this.props;
         e.preventDefault()
+        const { fetchRegistrationUser } = this.props;
         const { username, password } = this.state;
 
-        axios
-            .post(
-                loginUrl,
-                {
-                        username,
-                        password
-                    }
-                )
-            .then(res => {
-                console.log('submitRegistration',res.data)
-                if(res.data.success === true){
-                    setUsersToken(res.data.token)
-                    setToken(res.data.token)
-                }
-
-            })
-
-    }
+        fetchRegistrationUser({ username, password });
+   }
 
     onChangeInput = (e) => {
         console.log(e.target.name)
@@ -81,19 +64,16 @@ class Registration extends Component{
 }
 
 Registration.propTypes = {
-    setUsersToken: PropTypes.func
+    fetchRegistrationUser: PropTypes.func
 }
 
-const  mapStateToProps = state => ({
-    loginUrl: state.links.loginUrl
-})
 
 const mapDispatchToProps = dispatch => ({
-    setToken: token => dispatch(setToken(token))
+    fetchRegistrationUser: userData => dispatch(fetchRegistrationUser(userData))
 })
 
 const registrationWithRedux = connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
 )(Registration)
 

@@ -2,40 +2,36 @@ import React, { Component } from 'react';
 
 import Page from './organism/Page'
 import {Registration} from "./organism/Registration";
+import {connect} from "react-redux";
+import {setToken} from "../actions/registration";
 
 class App extends Component {
-  state = {
-    user: {},
-    token: null
-  }
-
-  setUsersToken = (token) => {
-    this.setState({
-      token
-    });
-    localStorage.setItem('token',token)
-  }
 
   componentDidMount() {
     const token = localStorage.getItem('token');
     if(token){
-      this.setState({
-        token
-      });
+      this.props.setToken(token)
     }
   }
 
   render(){
-    const { token } = this.state;
+    const { token } = this.props;
     if(token){
       return (
           <Page token={token} />
       );
     }
     return (
-        <Registration setUsersToken={token => this.setUsersToken(token)}/>
+        <Registration />
     )
   }
 }
 
-export default App;
+export default connect(
+    state => ({
+      token: state.token
+    }),
+    dispatch => ({
+      setToken: token => dispatch(setToken(token))
+    })
+)(App);
