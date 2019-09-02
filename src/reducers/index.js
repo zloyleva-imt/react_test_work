@@ -1,20 +1,9 @@
-import { SET_TOKEN } from '../actions/registration'
+import { auth } from "./auth";
+import { products } from "./products";
+import { combineReducers } from "redux";
 
-const initState = {
-    products: [],
-    reviews: [],
-    token: null
-}
 
-export const reducer = (state = initState, {type, payload}) => {
-
-    switch (type) {
-        case SET_TOKEN:
-            return {
-                ...state,
-                token: payload
-            }
-        default:
-            return state
-    }
-};
+export default combineReducers({
+    auth,
+    products,
+})

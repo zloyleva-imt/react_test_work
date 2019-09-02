@@ -32,7 +32,7 @@ App.propTypes = {
 
 export default connect(
     state => ({
-      token: state.token
+      token: state.auth.token
     }),
     dispatch => ({
       setToken: token => dispatch(setToken(token))

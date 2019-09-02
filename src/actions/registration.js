@@ -13,13 +13,10 @@ export const fetchRegistrationUser = ({ username, password }) => dispatch => {
             }
         )
         .then(res => {
-            console.log('submitRegistration',res.data)
             if(res.data.success === true){
-                // setUsersToken(res.data.token)
                 dispatch(setToken(res.data.token))
                 localStorage.setItem('token',res.data.token)
             }
-
         })
 }
 
