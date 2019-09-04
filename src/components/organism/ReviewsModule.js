@@ -12,6 +12,7 @@ import {faStar as faRegStar} from "@fortawesome/free-regular-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 import axios from 'axios';
+import {connect} from "react-redux";
 
 class ReviewsModule extends Component{
 
@@ -95,9 +96,9 @@ class ReviewsModule extends Component{
                     <Form.Group controlId="exampleForm.ControlInput1" onMouseLeave={this.clearHoveredStars}>
                         {
                             [...Array(5)].map((el,i) => {
-                                console.log('indexHoverStar',{indexHoverStar,i,indexSelectedStar})
                                 return (
                                     <FontAwesomeIcon
+                                        key={i}
                                         icon={
                                             indexHoverStar>=i || indexSelectedStar>=i
                                                 ?
@@ -125,4 +126,9 @@ class ReviewsModule extends Component{
     }
 }
 
-export default ReviewsModule;
+export default connect(
+    state => ({
+        productId: state.products.selectedProduct.id,
+        token: state.auth.token
+    })
+)(ReviewsModule);

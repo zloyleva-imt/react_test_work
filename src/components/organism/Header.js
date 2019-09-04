@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import {connect} from "react-redux";
+import {fetchProducts, selectProduct} from "../../actions/products";
 
-const Header = ({products, selectedProduct,menuClickHandler}) => {
-    // console.log(menuClickHandler)
+const Header = ({ products,fetchProducts,selectProduct, selectedProduct }) => {
+
+    useEffect(() => {
+        fetchProducts()
+    },{})
+
     return (
         <Navbar bg="dark" expand="lg" variant="dark">
             <Navbar.Brand href="#home">E-Store</Navbar.Brand>
@@ -15,7 +21,7 @@ const Header = ({products, selectedProduct,menuClickHandler}) => {
                             return (
                                 <Nav.Link
                                     href="#"
-                                    onClick={() => menuClickHandler(el.id)}
+                                    onClick={() => selectProduct(el)}
                                     key={el.id}
                                     active={(selectedProduct && el.id == selectedProduct.id)}
                                 >
@@ -30,5 +36,13 @@ const Header = ({products, selectedProduct,menuClickHandler}) => {
     )
 }
 
-export default Header;
-export {Header}
+export default connect(
+    state => ({
+        products: state.products.products,
+        selectedProduct: state.products.selectedProduct,
+    }),
+    dispatch => ({
+        fetchProducts: () => dispatch(fetchProducts()),
+        selectProduct: product => dispatch(selectProduct(product))
+    })
+)(Header);

@@ -1,8 +1,4 @@
-import React, {Component, Fragment} from 'react';
-import PropTypes from 'prop-types'
-
-import _ from 'lodash';
-import axios from 'axios';
+import React, { Fragment } from 'react';
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -11,71 +7,46 @@ import Row from "react-bootstrap/Row";
 import Header from "./Header";
 import Product from './Product';
 
-class Page extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            products: [],
-            reviews: [],
-            apiUrl: 'http://smktesting.herokuapp.com/',
-            selectedProduct: null,
-        }
-    }
-
-    componentDidMount() {
-        axios
-            .get(this.state.apiUrl + 'api/products/', {})
-            .then(res => {
-                console.log('res', res.data)
-                this.setState({
-                    ...this.state,
-                    products: res.data
-                });
-            })
-    }
-
-    menuClickHandler(id) {
-        const selectedProduct = _.findLast(this.state.products, el => el.id == id)
-
-        this.setState({
-            ...this.state,
-            selectedProduct: selectedProduct
-        });
-
-        axios
-            .get(this.state.apiUrl + 'api/reviews/' + id, {})
-            .then(res => {
-                console.log('res', res.data)
-                this.setState({
-                    ...this.state,
-                    reviews: res.data
-                });
-            })
-    }
-
-    render() {
-        const { token } = this.props;
-        const { products, selectedProduct, apiUrl, reviews } = this.state;
-
-        return (
-            <Fragment>
-                <Header products={products} selectedProduct={selectedProduct} menuClickHandler={(id) => this.menuClickHandler(id)}/>
-                <Container>
-                    <Row className="my-3">
-                        {
-                            selectedProduct ? <Product product={selectedProduct} apiUrl={apiUrl} reviews={reviews} token={token} /> : 'No product selected'
-                        }
-                    </Row>
-                </Container>
+const Page = () => (
+    <Fragment>
+        <Header />
+        <Container>
+            <Row className="my-3">
+                <Product />
+            </Row>
+        </Container>
 
 
-            </Fragment>
-        )
-    }
-}
-
-Page.propTypes = {
-    token: PropTypes.string.isRequired
-}
+    </Fragment>
+)
 
 export default Page;
+
+
+// constructor(props) {
+//     super(props);
+//     this.state = {
+//         reviews: [],
+//         apiUrl: 'http://smktesting.herokuapp.com/',
+//         selectedProduct: null,
+//     }
+// }
+// menuClickHandler(id) {
+//     const { products } = this.props;
+//     const selectedProduct = _.findLast(products, el => el.id == id)
+//
+//     this.setState({
+//         ...this.state,
+//         selectedProduct: selectedProduct
+//     });
+//
+//     axios
+//         .get(this.state.apiUrl + 'api/reviews/' + id, {})
+//         .then(res => {
+//             console.log('res', res.data)
+//             this.setState({
+//                 ...this.state,
+//                 reviews: res.data
+//             });
+//         })
+// }

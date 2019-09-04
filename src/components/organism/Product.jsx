@@ -3,11 +3,19 @@ import PropTypes from 'prop-types'
 
 import ProductDetails from "../moleculas/ProductDetails";
 import ReviewsModule from "./ReviewsModule";
+import {connect} from "react-redux";
+import routes from "../../initData/routes";
 
-const Product = ({ product,apiUrl,reviews,token }) => (
+const Product = ({ product,token }) => (
     <Fragment>
-        <ProductDetails product={product} apiUrl={apiUrl} />
-        <ReviewsModule reviews={reviews} token={token} productId={product.id} apiUrl={apiUrl}/>
+        {
+            product && (
+                <Fragment>
+                    <ProductDetails product={product} apiUrl={routes.apiUrl} />
+                    <ReviewsModule reviews={[]} apiUrl={routes.apiUrl}/>
+                </Fragment>
+            )
+        }
     </Fragment>
 )
 
@@ -17,10 +25,14 @@ const {
 } = PropTypes
 
 Product.propTypes ={
-    product: string.isRequired,
+    product: Object.isRequired,
     apiUrl: string.isRequired,
     reviews: array.isRequired,
     token: string.isRequired
 }
 
-export default Product;
+export default connect(
+    state => ({
+        product: state.products.selectedProduct
+    })
+)(Product);
