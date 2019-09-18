@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
+import {Route, withRouter} from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
+
+
 import Row from "react-bootstrap/Row";
-
-
 import Header from "./Header";
 import Product from './Product';
 
@@ -12,7 +13,7 @@ const Page = () => (
         <Header />
         <Container>
             <Row className="my-3">
-                <Product />
+                <Route path={'/products/:id'} component={Product} />
             </Row>
         </Container>
 
@@ -20,7 +21,7 @@ const Page = () => (
     </Fragment>
 )
 
-export default Page;
+export default withRouter(Page);
 
 
 // constructor(props) {

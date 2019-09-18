@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import {connect} from "react-redux";
@@ -19,14 +20,7 @@ const Header = ({ products,fetchProducts,selectProduct, selectedProduct }) => {
                     {
                         products.map(el => {
                             return (
-                                <Nav.Link
-                                    href="#"
-                                    onClick={() => selectProduct(el)}
-                                    key={el.id}
-                                    active={(selectedProduct && el.id == selectedProduct.id)}
-                                >
-                                    {el.title}
-                                </Nav.Link>
+                                <Link to={"/products/"+el.id} className='nav-link' key={el.id} activeclassname='active'>{el.title}</Link>
                             )
                         })
                     }
